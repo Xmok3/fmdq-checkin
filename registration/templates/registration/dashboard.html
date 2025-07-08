@@ -1,15 +1,9 @@
+{% load static %}
 <!DOCTYPE html>
 <html>
 <head>
     <title>Check-in Dashboard</title>
-    <style>
-        body { font-family: Arial; padding: 20px; }
-        table { width: 100%; border-collapse: collapse; margin-top: 20px; }
-        th, td { padding: 10px; border: 1px solid #ccc; text-align: left; }
-        th { background: #f4f4f4; }
-        .checked-in { color: green; font-weight: bold; }
-        .not-checked-in { color: red; font-weight: bold; }
-    </style>
+    <link rel="stylesheet" href="{% static 'css/dashboard.css' %}">
 </head>
 <body>
     <h1>FMDQ All Star Check-in Dashboard</h1>
