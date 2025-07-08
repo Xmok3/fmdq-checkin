@@ -81,3 +81,18 @@ def register(request):
         })
 
     return render(request, 'registration/register.html')
+
+from .models import Registration
+
+def dashboard(request):
+    registrations = Registration.objects.all()
+    total = registrations.count()
+    checked_in = registrations.filter(checked_in=True).count()
+
+    context = {
+        'registrations': registrations,
+        'total': total,
+        'checked_in': checked_in
+    }
+    return render(request, 'registration/dashboard.html', context)
+

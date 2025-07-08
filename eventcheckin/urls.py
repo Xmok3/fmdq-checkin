@@ -4,6 +4,7 @@ from django.urls import path, include
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include('registration.urls')),
+    path('dashboard/', views.dashboard, name='dashboard'), 
 ]
 from django.conf import settings
 from django.conf.urls.static import static

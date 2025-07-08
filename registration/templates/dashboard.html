@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Check-in Dashboard</title>
+    <style>
+        body { font-family: Arial; padding: 20px; }
+        table { width: 100%; border-collapse: collapse; margin-top: 20px; }
+        th, td { padding: 10px; border: 1px solid #ccc; text-align: left; }
+        th { background: #f4f4f4; }
+        .checked-in { color: green; font-weight: bold; }
+        .not-checked-in { color: red; font-weight: bold; }
+    </style>
+</head>
+<body>
+    <h1>FMDQ All Star Check-in Dashboard</h1>
+    <p><strong>Total Registrants:</strong> {{ total }}</p>
+    <p><strong>Total Checked In:</strong> {{ checked_in }}</p>
+
+    <table>
+        <tr>
+            <th>Name</th>
+            <th>Email</th>
+            <th>Code</th>
+            <th>Status</th>
+        </tr>
+        {% for reg in registrations %}
+        <tr>
+            <td>{{ reg.name }}</td>
+            <td>{{ reg.email }}</td>
+            <td>{{ reg.qr_code }}</td>
+            <td>
+                {% if reg.checked_in %}
+                    <span class="checked-in">✔ Checked In</span>
+                {% else %}
+                    <span class="not-checked-in">❌ Not Checked In</span>
+                {% endif %}
+            </td>
+        </tr>
+        {% endfor %}
+    </table>
+</body>
+</html>
