@@ -9,6 +9,11 @@ from django.http import HttpResponse
 from django.shortcuts import render
 from django.http import JsonResponse
 from .models import Registration
+from django.shortcuts import render
+
+def success(request):
+    return render(request, 'registration/success.html')
+
 
 def qr_scanner(request):
     return render(request, 'registration/scanner.html')
