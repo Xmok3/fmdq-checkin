@@ -1,3 +1,8 @@
+import os
+from dotenv import load_dotenv
+
+load_dotenv()
+
 import qrcode
 import csv
 from io import BytesIO
@@ -5,6 +10,12 @@ from django.core.files import File
 from django.shortcuts import render
 from django.http import HttpResponse, JsonResponse
 from .models import Registration
+from twilio.rest import Client
+from django.conf import settings
+
+
+
+
 
 # ---------- Registration & QR Code ----------
 def register(request):
@@ -22,6 +33,20 @@ def register(request):
         filename = f"qr_{registration.id}.png"
         registration.qr_code.save(filename, File(buffer), save=True)
 
+        # ✅ Send WhatsApp using Twilio (no secrets in code)
+        account_sid = os.getenv("TWILIO_ACCOUNT_SID")
+        auth_token = os.getenv("TWILIO_AUTH_TOKEN")
+        whatsapp_from = os.getenv("TWILIO_WHATSAPP_NUMBER")  # Usually 'whatsapp:+14155238886'
+
+        client = Client(account_sid, auth_token)
+
+        client.messages.create(
+            from_=whatsapp_from,
+            to=f'whatsapp:{phone}',
+            body=f"Hi {name}, thanks for registering for FMDQ All Star Basketball! 🎉\nHere's your QR code.",
+            media_url=[request.build_absolute_uri(registration.qr_code.url)]
+        )
+
         return render(request, 'registration/success.html', {
             'name': name,
             'qr_url': registration.qr_code.url
@@ -29,8 +54,6 @@ def register(request):
 
     return render(request, 'registration/register.html')
 
-def success(request):
-    return render(request, 'registration/success.html')
 
 # ---------- Dashboard ----------
 def dashboard(request):
