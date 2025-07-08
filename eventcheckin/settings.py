@@ -50,7 +50,7 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
-ROOT_URLCONF = 'eventchecki.urls'
+ROOT_URLCONF = 'eventcheckin.urls'
 
 TEMPLATES = [
     {
@@ -68,7 +68,7 @@ TEMPLATES = [
     },
 ]
 
-WSGI_APPLICATION = 'eventchecki.wsgi.application'
+WSGI_APPLICATION = 'eventcheckin.wsgi.application'
 
 
 # Database
