@@ -30,4 +30,5 @@ urlpatterns = [
     path('success/', views.success, name='success'),
     path('scanner/', views.qr_scanner, name='scanner'),
     path('check-in/<str:code>/', views.qr_checkin, name='qr_checkin'),
+    path('dashboard/', views.dashboard, name='dashboard'),
 ]
