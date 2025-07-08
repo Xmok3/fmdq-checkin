@@ -19,3 +19,14 @@ urlpatterns = [
 urlpatterns = [
     path('', register, name='register'),
 ]
+
+
+from django.urls import path
+from . import views
+
+urlpatterns = [
+    path('', views.register, name='register'),
+    path('success/', views.success, name='success'),
+    path('scanner/', views.qr_scanner, name='scanner'),
+    path('check-in/<str:code>/', views.qr_checkin, name='qr_checkin'),
+]

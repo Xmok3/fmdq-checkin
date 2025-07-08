@@ -6,6 +6,24 @@ from django.shortcuts import render
 from django.http import HttpResponse
 import csv
 from django.http import HttpResponse
+from django.shortcuts import render
+from django.http import JsonResponse
+from .models import Registration
+
+def qr_scanner(request):
+    return render(request, 'registration/scanner.html')
+
+def qr_checkin(request, code):
+    try:
+        guest = Registration.objects.get(code=code)
+        if guest.checked_in:
+            return JsonResponse({'status': 'info', 'message': 'Already checked in'})
+        guest.checked_in = True
+        guest.save()
+        return JsonResponse({'status': 'success', 'message': '✅ Check-in successful!'})
+    except Registration.DoesNotExist:
+        return JsonResponse({'status': 'error', 'message': '❌ Invalid code'})
+
 
 def export_csv(request):
     response = HttpResponse(content_type='text/csv')
