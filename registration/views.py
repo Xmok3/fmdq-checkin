@@ -1,8 +1,3 @@
-import os
-from dotenv import load_dotenv
-
-load_dotenv()
-
 import qrcode
 import csv
 from io import BytesIO
@@ -12,6 +7,7 @@ from django.http import HttpResponse, JsonResponse
 from .models import Registration
 from twilio.rest import Client
 from django.conf import settings
+
 
 
 
@@ -109,3 +105,7 @@ def export_csv(request):
         writer.writerow([guest.name, guest.phone, guest.email, guest.checked_in])
 
     return response
+
+
+def success(request):
+    return render(request, 'registration/success.html')
