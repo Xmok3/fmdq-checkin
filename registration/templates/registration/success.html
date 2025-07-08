@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Success</title>
+    <meta http-equiv="refresh" content="5; url=/" />
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #d1fae5;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+
+        .message-box {
+            background-color: #ffffff;
+            padding: 40px;
+            border-radius: 10px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            color: #065f46;
+        }
+    </style>
+</head>
+<body>
+    <div class="message-box">
+        <h2>Thank you, {{ name }}!</h2>
+        <p>Your registration was successful.</p>
+        <img src="{{ qr_url }}" alt="Your QR Code" width="200"  style="margin-bottom: 10px;"><br>
+        <a href="{{ qr_url }}" download>
+    <button>📥 Download QR Code</button>
+    </a>
+        <p>Present this code at the check-in point.</p>
+    </div>
+</body>
+</html>
