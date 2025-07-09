@@ -109,3 +109,7 @@ def export_csv(request):
         writer.writerow([guest.name, guest.phone, guest.email, guest.checked_in])
 
     return response
+
+
+def success(request):
+    return render(request, 'registration/success.html')
