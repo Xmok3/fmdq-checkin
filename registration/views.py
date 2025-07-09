@@ -1,8 +1,3 @@
-import os
-from dotenv import load_dotenv
-
-load_dotenv()
-
 import qrcode
 import csv
 from io import BytesIO
@@ -12,6 +7,7 @@ from django.http import HttpResponse, JsonResponse
 from .models import Registration
 from twilio.rest import Client
 from django.conf import settings
+
 
 
 
