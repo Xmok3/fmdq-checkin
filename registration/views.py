@@ -1,3 +1,8 @@
+import os
+from dotenv import load_dotenv
+
+load_dotenv()
+
 import qrcode
 import csv
 from io import BytesIO
