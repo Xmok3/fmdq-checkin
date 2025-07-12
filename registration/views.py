@@ -25,37 +25,40 @@ def register(request):
         phone = request.POST.get('phone')
         email = request.POST.get('email')
 
+        if not name or not phone or not email:
+            return render(request, 'registration/register.html', {
+                'error': 'All fields are required.'
+            })
+
         registration = Registration(name=name, phone=phone, email=email)
         registration.save()
 
-    qr = qrcode.make(f"FMDQ-{registration.id}")
-    buffer = BytesIO()
-    qr.save(buffer)
-    filename = f"qr_{registration.id}.png"
-    registration.qr_code.save(filename, File(buffer), save=True)
+        qr = qrcode.make(f"FMDQ-{registration.id}")
+        buffer = BytesIO()
+        qr.save(buffer)
+        filename = f"qr_{registration.id}.png"
+        registration.qr_code.save(filename, File(buffer), save=True)
 
-    # ✅ Send WhatsApp using Twilio (no secrets in code)
-    account_sid = os.getenv("TWILIO_ACCOUNT_SID")
-    auth_token = os.getenv("TWILIO_AUTH_TOKEN")
-    whatsapp_from = os.getenv("TWILIO_WHATSAPP_NUMBER")  # Usually 'whatsapp:+14155238886'
+        account_sid = os.getenv("TWILIO_ACCOUNT_SID")
+        auth_token = os.getenv("TWILIO_AUTH_TOKEN")
+        whatsapp_from = os.getenv("TWILIO_WHATSAPP_NUMBER")
 
-    client = Client(account_sid, auth_token)
+        client = Client(account_sid, auth_token)
 
-    phone = request.POST.get('phone')
-    if phone and phone.startswith('0'):
-        phone = '+234' + phone[1:]
+        if phone and phone.startswith('0'):
+            phone = '+234' + phone[1:]
 
-    client.messages.create(
-    from_=whatsapp_from,
-    to=f'whatsapp:{phone}',
-    body=f"Hi {name}, thanks for registering for FMDQ All Star Basketball! 🎉\nHere's your QR code.",
-    media_url=[request.build_absolute_uri(registration.qr_code.url)]
-)
+        client.messages.create(
+            from_=whatsapp_from,
+            to=f'whatsapp:{phone}',
+            body=f"Hi {name}, thanks for registering for FMDQ All Star Basketball! 🎉\nHere's your QR code.",
+            media_url=[request.build_absolute_uri(registration.qr_code.url)]
+        )
 
-    return render(request, 'registration/success.html', {
-        'name': name,
-        'qr_url': registration.qr_code.url
-    })
+        return render(request, 'registration/success.html', {
+            'name': name,
+            'qr_url': registration.qr_code.url
+        })
 
     return render(request, 'registration/register.html')
 
