@@ -41,6 +41,9 @@ def register(request):
 
         client = Client(account_sid, auth_token)
 
+    if phone.startswith('0'):
+        phone = '+234' + phone[1:]
+
         client.messages.create(
             from_=whatsapp_from,
             to=f'whatsapp:{phone}',
